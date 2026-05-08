@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		JS Interactive Website
+	</title>
+
+	<style>
+        input {
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: lightpink;
+        }
+    </style>
+</head>
+<body>
+
+	<h1>JavaScript Interactive Website</h1><br>
+
+    <h2>1. Password Strength Checker</h2>
+
+    <label>Password:</label><br>
+    <input type="text" id="passwordInput"><br>
+
+    <button onclick="checkPassword()">Check Password</button>
+
+    <p id="passwordResult"></p ><br>
+
+    <h2>2. Security Clearance System</h2>
+
+    <label>Age:</label><br>
+    <input type="number" id="ageInput"><br>
+
+    <label>Employee ID:</label><br>
+    <input type="text" id="employeeInput"><br>
+
+    <label>Years of Experience:</label><br>
+    <input type="number" id="experienceInput"><br>
+
+    <button onclick="checkClearance()">Check Clearance</button>
+
+    <p id="clearanceResult"></p><br>
+
+    
+
+    <h2>3. Sign Up / Login Simulator</h2>
+
+    <label>Username:</label><br>
+    <input type="text" id="usernameInput"><br>
+
+    <label>Password:</label><br>
+    <input type="password" id="loginPasswordInput"><br>
+
+    <button onclick="signUp()">Sign Up</button>
+
+    <button onclick="login()">Login</button>
+
+    <p id="loginResult"></p><br>
+
+    <h2>4. Dark Mode Button</h2>
+
+    <button onclick="toggleDarkMode()">Dark Mode</button>
+
+    <p id="darkResult"></p><br>
+
+    <h2>5. Cyber Threat Detector</h2>
+
+    <label>Website URL:</label><br>
+    <input type="text" id="urlInput"><br>
+
+    <button onclick="analyzeWebsite()">Analyze Website</button>
+
+    <p id="websiteResult"></p>
+
+    <script>
+
+        let savedUsername = "";
+        let savedPassword = "";
+
+        let darkMode = false;
+
+        function checkPassword() {
+
+            let password = document.getElementById("passwordInput").value;
+
+            let hasUppercase = password != password.toLowerCase();
+
+            let hasLowercase = password != password.toUpperCase();
+
+            let hasSymbol = password.includes("!") || password.includes("@") || password.includes("#") || password.includes("$");
+
+            let hasSpace = password.includes(" ");
+
+            if (password.length < 12) {
+
+                document.getElementById("passwordResult").innerHTML =
+                    "Password too short.";
+
+            }
+
+            else if (hasUppercase == false) {
+
+                document.getElementById("passwordResult").innerHTML =
+                    "Missing uppercase letter";
+
+            }
+
+            else if (hasLowercase == false) {
+
+                document.getElementById("passwordResult").innerHTML =
+                    "Missing lowercase letter";
+
+            }
+
+            else if (hasSymbol == false) {
+
+                document.getElementById("passwordResult").innerHTML =
+                    "Missing punctuation";
+
+            }
+
+            else if (hasSpace == true) {
+
+                document.getElementById("passwordResult").innerHTML =
+                    "Password should not contain spaces";
+
+            }
+
+            else {
+
+                document.getElementById("passwordResult").innerHTML =
+                    "Strong Password";
+
+            }
+
+        }
+
+        function checkClearance() {
+
+            let age = Number(document.getElementById("ageInput").value);
+
+            let employeeID = document.getElementById("employeeInput").value;
+
+            let experience = Number(document.getElementById("experienceInput").value);
+
+            if (employeeID.startsWith("SEC") == false && employeeID.startsWith("EMP") == false) {
+            	document.getElementById("clearanceResult").innerHTML ="Invalid employee ID";
+
+            }
+
+            else if (age >= 25 && experience >= 5 && employeeID.startsWith("SEC")) {
+				document.getElementById("clearanceResult").innerHTML ="Access Granted: Level 3";
+
+            }
+
+            else if (age >= 21 && experience >= 2 && employeeID.startsWith("EMP")) {
+                document.getElementById("clearanceResult").innerHTML ="Access Granted: Level 2";
+
+            }
+
+            else if (age >= 18 && employeeID.startsWith("EMP")) {
+            	document.getElementById("clearanceResult").innerHTML ="Access Granted: Level 1";
+
+            }
+
+            else {
+            	document.getElementById("clearanceResult").innerHTML ="Access Denied";
+
+            }
+
+        }
+
+        function signUp() {
+
+            savedUsername = document.getElementById("usernameInput").value;
+
+            savedPassword = document.getElementById("loginPasswordInput").value;
+
+            document.getElementById("loginResult").innerHTML ="Sign up successful";
+
+        }
+
+        function login() {
+
+            let username = document.getElementById("usernameInput").value;
+
+            let password = document.getElementById("loginPasswordInput").value;
+
+            if (savedUsername == "") { document.getElementById("loginResult").innerHTML ="You need to sign up first";
+
+            }
+
+            else if (username != savedUsername) {document.getElementById("loginResult").innerHTML ="Username not found";
+
+            }
+
+            else if (password != savedPassword) {document.getElementById("loginResult").innerHTML ="Incorrect password";
+
+            }
+
+            else {
+            	document.getElementById("loginResult").innerHTML = "Login Successful";
+
+            }
+
+        }
+
+        function toggleDarkMode() {if (darkMode == false) {
+
+                document.body.style.backgroundColor = "black";
+
+                document.body.style.color = "white";
+
+                document.getElementById("darkResult").innerHTML = "Dark mode is on";
+
+                darkMode = true;
+
+            }
+
+            else {
+
+                document.body.style.backgroundColor = "white";
+
+                document.body.style.color = "black";
+
+                document.getElementById("darkResult").innerHTML = "Dark mode is off";
+
+                darkMode = false;
+
+            }
+
+        }
+
+        function analyzeWebsite() {
+
+            let url = document.getElementById("urlInput").value.toLowerCase();
+
+            let safe = url.startsWith("https://");
+
+            let suspicious = url.includes("free-money") || url.includes("hack") || url.includes("winner") || url.includes("bitcoin");
+
+            if (safe == false && suspicious == true) {
+
+                document.getElementById("websiteResult").innerHTML = "Dangerous Website";
+
+            }
+
+            else if (suspicious == true) {
+
+                document.getElementById("websiteResult").innerHTML = "Suspicious Website";
+
+            }
+
+            else if (safe == false) {
+
+                document.getElementById("websiteResult").innerHTML = "Dangerous Website";
+
+            }
+
+            else {
+
+                document.getElementById("websiteResult").innerHTML = "Safe Website";
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>
